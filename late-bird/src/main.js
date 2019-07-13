@@ -6,14 +6,10 @@ require('dotenv').config()
 
 Vue.config.productionTip = false
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
-
 Vue.use(VueGoogleMaps, {
   load: {
     key: process.env.VUE_APP_GOOLE_MAPS_KEY,
-    //libraries: 'places', // This is required if you use the Autocomplete plugin
+    libraries: 'places', // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
     // (as you require)
@@ -34,3 +30,9 @@ Vue.use(VueGoogleMaps, {
   //// then disable the following:
   // installComponents: true,
 })
+
+new Vue({
+  render: h => h(App),
+}).$mount('#app')
+
+
