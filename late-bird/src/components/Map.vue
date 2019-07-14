@@ -45,11 +45,11 @@
             :opened="infoWinOpen" 
             @closeclick="infoWinOpen=false">
             <p class="infoWindow__item name">{{ infoContent.name }}</p>
-            <p class="infoWindow__item name">{{ infoContent.range }}</p>
-            <p class="infoWindow__item name">{{ infoContent.discount }}</p>
-            <p class="infoWindow__item name">{{ infoContent.meals }}</p>
-            <p class="infoWindow__item name">{{ infoContent.food }}</p>
-            <p class="infoWindow__item name">{{ infoContent.closing }}</p>
+            <p class="infoWindow__item food">{{ infoContent.food }}</p>
+            <p class="infoWindow__item range"></p>
+            <p class="infoWindow__item discount">{{ infoContent.discount }}</p>
+            <p class="infoWindow__item meals">{{ infoContent.meals }}</p>
+            <p class="infoWindow__item closing">closing at {{ infoContent.closing }}</p>
           </GmapInfoWindow>
         </GmapMap>
         
@@ -62,8 +62,17 @@
 
       
         
-      <div v-if="desktop">
+      <div v-if="desktop && infoWinOpen" class="c-map__info-container">
+        <h3 class="c-map__info-name">{{ infoContent.name }}</h3>
         <div class="c-map__info"></div>
+        <div class="c-map__info-desc">
+          <p class="infoWindow__item food">{{ infoContent.food }}</p>
+          <p class="infoWindow__item range"></p>
+          <p class="infoWindow__item discount">{{ infoContent.discount }}</p>
+          <p class="infoWindow__item meals">{{ infoContent.meals }}</p>
+          <p class="infoWindow__item closing">closing at {{ infoContent.closing }}</p>
+        </div>
+        
       </div>
 
        
@@ -282,6 +291,47 @@ export default {
     flex-direction: column;
   }
 
+  .infoWindow__item {
+    margin-top: 5px;
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-right: 10px;
+    }
+
+    &.name {
+      font-weight: bold;
+      &::before {
+        display: none
+      }
+    }
+
+    &.food::before {
+      display: none
+    }
+
+    &.discount::before {
+      background-image: url(../assets/img/discount.png);
+    }
+
+    &.range::before {
+      width: 40px;
+      background-image: url(../assets/img/dolar.png);
+    }
+
+    &.meals::before {
+      background-image: url(../assets/img/restaurant.png);
+    }
+
+    &.closing::before {
+      background-image: url(../assets/img/time.png);
+    }
+  }
+
   &__search {
     position: absolute;
     top: 20px;
@@ -356,13 +406,34 @@ export default {
     &__info {
       width: 100%;
       max-width: 464px;
-      height: 60%;
+      height: 100%;
       max-height: 323px;
       background-image: url('../assets/img/rest.jpg');
       flex-grow: 1;
       background-size: cover;
       background-position: 100% 0;
       margin-left: auto;
+
+      &-container {
+        width: 100%; 
+        max-width: 40%
+      }
+
+      &-name {
+        font-size: 28px;
+        margin-left: auto;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        max-width: 464px;
+        align-self: flex-end;
+      }
+
+      &-desc {
+        font-size: 16px;
+        margin-top: 20px;
+        max-width: 464px;
+        margin-left: auto;
+      }
 
     }
   }
